@@ -13,7 +13,7 @@ public class EnemyAttributes : MonoBehaviour {
 	public bool destinationReached = false;
 
 	float accuracy = 20;
-	int damage = 20;
+	public int damage = 20;
 	float criticalChange = 20;
 	float criticalMultiplier = 1.5f;
 

@@ -43,6 +43,8 @@ public class SolarSystemGen : MonoBehaviour {
 
 			if(Physics.Raycast (ray, out hit)) {
 				if(hit.transform.tag == "Planet") {
+					gsh.SetCurrentMission(hit.transform.GetComponent<MissionHandler>().missionType);
+
 					//GameObject.Find ("GameStateHandler").GetComponent<GameStateHandler>().SetCurrentMat(hit.transform.GetComponent<Renderer>().material); // her har vi allerede noget!! Sæt en planet type istedet for at sætte mats. Planet type = enum fætter.
 					Orbit orb = hit.transform.GetComponent<Orbit>();
 					if(orb.distanceToStar < (20.0f * scaleFactor)) {
@@ -106,9 +108,12 @@ public class SolarSystemGen : MonoBehaviour {
 			GameObject planet = GameObject.CreatePrimitive (PrimitiveType.Sphere);
 			// Set the initial position of the new planet
 			planet.transform.position = new Vector3(sphere.transform.position.x, sphere.transform.position.y, sphere.transform.position.z);
-
+			planet.AddComponent<MissionHandler>();
 			// Set name and parent of new planet
-			planet.name = ("planet"+i.ToString());
+			planet.name = ("planet"+i.ToString()+"-"+Random.value);
+			gsh.planets.Add (planet);
+
+		//	planet.AddComponent<MissionHandler>();
 			planet.transform.SetParent (sphere.transform);
 			planet.tag = "Planet";
 			// Add the orbit script to the new planet
