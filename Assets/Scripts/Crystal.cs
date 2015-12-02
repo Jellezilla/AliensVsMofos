@@ -22,7 +22,7 @@ public class Crystal : MonoBehaviour {
 		amount += adj;
 		if (amount <= 0) {
 			Destroy(gameObject);
-		}
+		} 
 	}
 	void OnCollisionEnter(Collision col) {
 		if (col.transform.tag == "Player") {
