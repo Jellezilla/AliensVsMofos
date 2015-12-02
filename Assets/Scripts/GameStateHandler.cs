@@ -5,7 +5,7 @@ public class GameStateHandler : MonoBehaviour {
 
 	private Texture2D GameLogo;
 	private Material currentMat;
-
+	private Texture SpaceCashIcon; 
 	private int spaceCash;
 
 	public int GetSpaceCash() {
@@ -35,6 +35,7 @@ public class GameStateHandler : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		DontDestroyOnLoad (transform);
+		SpaceCashIcon = Resources.Load ("spaceCash_icon") as Texture;
 		GameLogo = Resources.Load("textLogo") as Texture2D;
 	}
 	
@@ -61,7 +62,8 @@ public class GameStateHandler : MonoBehaviour {
 		}
 
 		if (Application.loadedLevel == 1 || Application.loadedLevel == 2) {
-			GUI.Label (new Rect(250, 5, 150, 25), "SpaceCash: "+spaceCash);
+			GUI.Label (new Rect(280, 5, 100, 25), spaceCash.ToString ());
+			GUI.DrawTexture (new Rect(250, 5, 25, 25), SpaceCashIcon);
 		}
 
 	}
