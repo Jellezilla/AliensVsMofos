@@ -342,17 +342,33 @@ public class TileHandler : MonoBehaviour {
 
 		Instantiate (SpaceshipPrefab, new Vector3 (xPos+0.5f, 1.1F, yPos+2.5f), Quaternion.identity);
 
-
+		MakePathWayFromSpaceShip (29);
 		//SpawnPlayer ();
 		// player should be spawned at 30x, 33z - ALWAYS!
 
 	}
+	// create path to nearest non liquid
+	private void MakePathWayFromSpaceShip(int x) {
+		int y = 32;
+		Debug.Log ("tmpMap: "+tmpMap [x, y].ToString ());
+		Debug.Log ("x: " + x);
+		try {
+			if (tmpMap [x, y] != 1 && tmpMap [x, y] != 2 && tmpMap [x, y] != 3) { // tile is not walkable - make it so and go again
+				map[x,y] = 1;
+
+				MakePathWayFromSpaceShip(x-1);
+			} else { // tile is walkable. 
+				Debug.Log ("Done! at x: "+x+". tmpMap = "+tmpMap[x,y].ToString());
+			}
+		} catch(System.IndexOutOfRangeException) {
+		}
+
+	}
+
 	private void SpawnPlayer() {
 		GameObject player = (Instantiate (PlayerPrefab, new Vector3 (30, 1.0f, 33), Quaternion.identity) as GameObject);
 		//Camera cam = Camera.main;
 		GameObject cam = GameObject.FindGameObjectWithTag ("MainCamera");
-		CamSmoothFollowCustom csfc = cam.GetComponent<CamSmoothFollowCustom> ();
-		csfc.target = player.transform;
 	}
 
 
