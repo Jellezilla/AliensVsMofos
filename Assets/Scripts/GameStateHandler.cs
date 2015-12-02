@@ -49,7 +49,7 @@ public class GameStateHandler : MonoBehaviour {
 		Application.LoadLevel (level);
 	}
 	void OnGUI() {
-		if (Application.loadedLevel == 1) {
+		if (Application.loadedLevel == 0) {
 
 			GUI.DrawTexture (new Rect(Screen.width/2-GameLogo.width/2, Screen.height/2-200, GameLogo.width, GameLogo.height), GameLogo);
 
@@ -69,7 +69,7 @@ public class GameStateHandler : MonoBehaviour {
 	}
 
 	public void StartGame (int level) {
-		StartCoroutine(ChangeLevel(2));
+		StartCoroutine(ChangeLevel(1));
 	}
 	
 	public void QuitGame () {
