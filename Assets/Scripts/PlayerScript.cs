@@ -15,12 +15,13 @@ public class PlayerScript : MonoBehaviour {
 	private float minXValue;
 	private float maxXValue;
 	private float currentHealth;
-	private bool onAirArea = false;
+	public bool onAirArea = false;
 	public float chargeDownSpeed = 1f;
 	public float chargeUpSpeed = 10f;
 	GameStateHandler gsh;
+	public Texture terraformerIcon;
 	private bool terraFormerPurchased = false;
-
+	GameObject TerraPrefab;
 	
 	// Everytime we access the CurrentHealth property, which changes the health, then the "HandleHealth" method is called, which adjusts the position and color of the health bar
 	private float CurrentHealth {
@@ -35,7 +36,7 @@ public class PlayerScript : MonoBehaviour {
 	public Image visualHealth;
 
 	private bool guiShow;
-	public float spaceCash = 200;
+	//public float spaceCash;
 
 	//public int cash = 0;
 //	public int maxHealth = 100;
@@ -66,6 +67,7 @@ public class PlayerScript : MonoBehaviour {
 		currentHealth = maxHealth;
 
 		gsh = GameObject.Find("GameStateHandler").GetComponent<GameStateHandler>();
+		//spaceCash = gsh.GetSpaceCash ();
 	}
 
 	public void ApplyDamage(int dmg){
@@ -161,42 +163,55 @@ public class PlayerScript : MonoBehaviour {
 	void OnGUI() {
 		if(guiShow == true) {
 			GUI.Box(new Rect(10, 60, 220, 350), "Buy items");
-			GUI.Label(new Rect(65, 383, 220, 35), "$pace Ca$h: " + spaceCash);
+			GUI.Label(new Rect(65, 383, 220, 35), "$pace Ca$h: " + gsh.GetSpaceCash());
 			//GUI.Button shotgunButton = GUI.Button(new Rect(10, 310, 200, 30), "Buy shotgun");
 			if(GUI.Button(new Rect(20, 100, 200, 30), "Buy lighter space suit $110,00")) {
 				Debug.Log("You clicked 'Buy lighter space suit'");
-				spaceCash -= 110;
+				gsh.SetSpaceCash(-110);
 				gameObject.GetComponent<Movement>().maxSpeed = 3;
 			}
 
 			if(GUI.Button(new Rect(20, 160, 200, 30), "Buy bigger oxygen tank $80,00")) {
 				Debug.Log("You clicked 'Buy bigger oxygen tank'");
-				spaceCash -= 80;
+				gsh.SetSpaceCash(-80);
 				chargeDownSpeed = .6f;
 			}
 
 			if(GUI.Button(new Rect(20, 220, 200, 30), "Buy revolver $1.000,00")) {
-				spaceCash -= 1000;
+				gsh.SetSpaceCash(-1000); //-= 1000;
 				gameObject.GetComponent<GunController>().BuyRevolver();
 			}
 
 			if(GUI.Button(new Rect(20, 280, 200, 30), "Buy assault rifle $1.500,00")) {
-				spaceCash -= 1500;
+				gsh.SetSpaceCash(-1500);
 				gameObject.GetComponent<GunController>().BuyRifle();
 			}
 
 
 			if (GUI.Button(new Rect(20, 340, 200, 30), "Buy shotgun $1.700,00")) {
-				spaceCash -= 1700;
+				gsh.SetSpaceCash(-1700);
 				gameObject.GetComponent<GunController>().BuyShotgun();
 			}
 			if(GUI.Button (new Rect (20, 400, 200, 30), "Buy Terraformer $2.500,00")) {
-				spaceCash -= 2500;
+				gsh.SetSpaceCash(-2500);
 				terraFormerPurchased = true;
 			}
 		}
 		if (terraFormerPurchased) {
+			GUI.DrawTexture (new Rect(Screen.width-50,Screen.height/2, 50, 50), terraformerIcon);
+			if(GUI.Button (new Rect(Screen.width-50, Screen.height/2, 50, 50), "")) {
+				//GUI.DrawTexture(new Rect(Input.mousePosition.x, Input.mousePosition.y, 50, 50), terraformerIcon);
+				TileHandler th = GameObject.Find ("TileHandler").GetComponent<TileHandler>();
+				if(!th.GetTile((int)transform.position.x,(int)transform.position.z).blocked &&
+			       !th.GetTile((int)transform.position.x+1,(int)transform.position.z).blocked &&
+				   !th.GetTile((int)transform.position.x,(int)transform.position.z+1).blocked &&
+			       !th.GetTile((int)transform.position.x+1,(int)transform.position.z+1).blocked) {
+				 	TerraPrefab = (GameObject)Resources.Load("TerraFormer");
+					Instantiate(TerraPrefab, new Vector3(transform.position.x+.5f,0.0f,transform.position.z+.5f),Quaternion.identity);
+					terraFormerPurchased = false;
+				}
 
+			}
 		}
 	}
 

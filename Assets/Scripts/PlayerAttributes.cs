@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class PlayerAttributes : MonoBehaviour {
 
-	public int cash = 0;
+//	public int cash = 0;
 	public int maxHealth = 100;
 	public int currentHealth {get; private set;}
 	public bool alive {get; private set;}
@@ -19,7 +19,7 @@ public class PlayerAttributes : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+		
 	}
 	
 	// Update is called once per frame

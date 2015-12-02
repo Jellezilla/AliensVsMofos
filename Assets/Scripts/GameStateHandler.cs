@@ -12,7 +12,7 @@ public class GameStateHandler : MonoBehaviour {
 		return spaceCash;
 	}
 	public void SetSpaceCash(int adj) {
-		spaceCash = adj;
+		spaceCash += adj;
 	}
 
 	public enum PlanetType { Warm, Habitable, Cold };
@@ -58,6 +58,10 @@ public class GameStateHandler : MonoBehaviour {
 			if(GUI.Button (new Rect(Screen.width/2-100, Screen.height/2+60, 200, 50), "Options"))
 				Debug.Log ("you ain't got no motherfucking options bitch!");	
 
+		}
+
+		if (Application.loadedLevel == 1 || Application.loadedLevel == 2) {
+			GUI.Label (new Rect(250, 5, 150, 25), "SpaceCash: "+spaceCash);
 		}
 
 	}

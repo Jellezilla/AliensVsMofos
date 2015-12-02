@@ -70,7 +70,8 @@ public class Mission : MonoBehaviour {
 		rewardGiven = true;
 		switch(rewardType){
 		case MissionRewardType.Money:
-			playerScript.spaceCash += rewardValue;
+			//playerScript.spaceCash += rewardValue;
+			GameObject.Find ("GameStateHandler").GetComponent<GameStateHandler>().SetSpaceCash(rewardValue);
 			break;
 		}
 	}

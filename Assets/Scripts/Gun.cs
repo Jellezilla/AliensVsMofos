@@ -180,8 +180,8 @@ public class Gun : MonoBehaviour {
 			currentClip -= 1;
 			currentAmmo -= 1;
 
-//			Debug.Log(gameObject.tag + " " + currentClip);
-//			Debug.Log(gameObject.tag + " " + currentAmmo);
+			Debug.Log(gameObject.tag + " " + currentClip);
+			Debug.Log(gameObject.tag + " " + currentAmmo);
 
 				if (gameObject.tag == "Revolver") {
 					ammoVariables.revolverCurrentClip = currentClip;
