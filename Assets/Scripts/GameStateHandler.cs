@@ -49,15 +49,15 @@ public class GameStateHandler : MonoBehaviour {
 		Application.LoadLevel (level);
 	}
 	void OnGUI() {
-		if (Application.loadedLevel == 0) {
+		if (Application.loadedLevel == 1) {
 
 			GUI.DrawTexture (new Rect(Screen.width/2-GameLogo.width/2, Screen.height/2-200, GameLogo.width, GameLogo.height), GameLogo);
 
-			if (GUI.Button(new Rect(Screen.width/2-100, Screen.height/2-50, 200, 100), "Explore a new galaxy"))
-				StartCoroutine(ChangeLevel(1));
-
-			if(GUI.Button (new Rect(Screen.width/2-100, Screen.height/2+60, 200, 50), "Options"))
-				Debug.Log ("you ain't got no motherfucking options bitch!");	
+//			if (GUI.Button(new Rect(Screen.width/2-100, Screen.height/2-50, 200, 100), "Explore a new galaxy"))
+//				StartCoroutine(ChangeLevel(1));
+//
+//			if(GUI.Button (new Rect(Screen.width/2-100, Screen.height/2+60, 200, 50), "Options"))
+//				Debug.Log ("you ain't got no motherfucking options bitch!");	
 
 		}
 
@@ -66,5 +66,14 @@ public class GameStateHandler : MonoBehaviour {
 			GUI.DrawTexture (new Rect(250, 5, 25, 25), SpaceCashIcon);
 		}
 
+	}
+
+	public void StartGame (int level) {
+		StartCoroutine(ChangeLevel(2));
+	}
+	
+	public void QuitGame () {
+		Debug.Log("Quitting Game");
+		Application.Quit();
 	}
 }
