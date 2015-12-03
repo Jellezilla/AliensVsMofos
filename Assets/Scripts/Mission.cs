@@ -14,7 +14,7 @@ public class Mission : MonoBehaviour {
 	public bool completed {get; protected set;}
 	protected bool rewardGiven = false;
 	protected PlayerScript playerScript;
-	public int rewardValue = 50;
+	private int rewardValue = 3000;
 	private Transform target;
 	private GameStateHandler gsh;
 	private TileHandler th;
