@@ -331,6 +331,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &144620
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 431088}
+  - 82: {fileID: 8213454}
+  m_Layer: 0
+  m_Name: Audio (must be first child!!)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &148784
 GameObject:
   m_ObjectHideFlags: 1
@@ -775,7 +791,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 421914}
-  m_RootOrder: 0
+  m_RootOrder: 1
 --- !u!4 &414418
 Transform:
   m_ObjectHideFlags: 1
@@ -803,7 +819,7 @@ Transform:
   - {fileID: 493014}
   - {fileID: 423734}
   m_Father: {fileID: 421914}
-  m_RootOrder: 2
+  m_RootOrder: 4
 --- !u!4 &421746
 Transform:
   m_ObjectHideFlags: 1
@@ -824,13 +840,14 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 175664}
   m_LocalRotation: {x: 0, y: .382683456, z: 0, w: .923879504}
-  m_LocalPosition: {x: 32, y: 2, z: 35}
+  m_LocalPosition: {x: 2652.77808, y: 84.5387192, z: -212.070877}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 431088}
   - {fileID: 414340}
   - {fileID: 424378}
-  - {fileID: 416816}
   - {fileID: 488548}
+  - {fileID: 416816}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &423242
@@ -870,7 +887,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 421914}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!4 &425666
 Transform:
   m_ObjectHideFlags: 1
@@ -922,6 +939,18 @@ Transform:
   m_Children:
   - {fileID: 423242}
   m_Father: {fileID: 499454}
+  m_RootOrder: 0
+--- !u!4 &431088
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 144620}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 421914}
   m_RootOrder: 0
 --- !u!4 &433164
 Transform:
@@ -1286,6 +1315,76 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!82 &8213454
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 144620}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!82 &8260058
 AudioSource:
   m_ObjectHideFlags: 1
@@ -1387,12 +1486,13 @@ MonoBehaviour:
   speed: 0
   healthTransform: {fileID: 0}
   canvas: {fileID: 0}
+  onAirArea: 0
   chargeDownSpeed: 1
   chargeUpSpeed: 10
+  terraformerIcon: {fileID: 0}
   maxHealth: 100
   healthText: {fileID: 0}
   visualHealth: {fileID: 0}
-  spaceCash: 200
   damage: 40
   criticalChange: 20
   criticalMultiplier: 2.5

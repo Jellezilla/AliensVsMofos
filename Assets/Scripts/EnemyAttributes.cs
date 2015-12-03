@@ -28,7 +28,7 @@ public class EnemyAttributes : MonoBehaviour {
 		currentHealth = maxHealth;
 		anim = GetComponent<Animator>();
 		audioSource = GetComponent<AudioSource>();
-		shoot = Resources.Load ("EnemyShoot") as AudioClip;
+		shoot = Resources.Load ("pewpew") as AudioClip;
 		pain = Resources.Load ("pain") as AudioClip;
 
 	//	audio.PlayOneShot ((AudioClip)Resources.Load ("gunshot1"));
@@ -43,11 +43,14 @@ public class EnemyAttributes : MonoBehaviour {
 		}
 		for (int i = 0; i < numberOfShots; i++){
 
+			if (!alive)
+				yield break;
+
 			anim.SetTrigger("Shoot");
 //			print ("enemy shooting");
 			waitForNextShot = true;
 			int hitAccuracy = Random.Range (1,100);
-			bool hit = (hitAccuracy < accuracy ? true : false);         
+			bool hit = (hitAccuracy < accuracy ? true : false);  
 			audioSource.PlayOneShot(shoot);
 			if (hit){
 //				print ("enemy hitting");

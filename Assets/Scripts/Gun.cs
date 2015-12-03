@@ -44,6 +44,7 @@ public class Gun : MonoBehaviour {
 	public float currentClip;
 	public float maxAmmo;
 	public float maxClip;
+	AudioClip alienScream;
 	
 
 //	[HideInInspector]
@@ -53,6 +54,7 @@ public class Gun : MonoBehaviour {
 		muzzleflash = GetComponent<MuzzleFlash>();
 		ammoVariables = GameObject.FindGameObjectWithTag ("Player").GetComponent<AmmunitionVariables>();
 		shotsRemainingInBurst = burstCount;
+		alienScream = Resources.Load ("alien-scream") as AudioClip;
 		//Restock();
 
 //		currentAmmoInMag = ammoPerMag;
@@ -211,6 +213,11 @@ public class Gun : MonoBehaviour {
 					}
 					EnemyAttributes enemyAttributes = hit.collider.gameObject.GetComponent<EnemyAttributes>();
 					enemyAttributes.ApplyDamage((int)finalDamage);
+					int random = Random.Range (0,100);
+					if (random > 70)
+						if (enemyAttributes.alive)
+							enemyAttributes.transform.GetChild (0).GetComponent<AudioSource>().PlayOneShot(alienScream);
+
 					enemyAttributes.TriggerHitAnimation(true);
 				}
 			}
