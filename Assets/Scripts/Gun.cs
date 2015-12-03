@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Gun : MonoBehaviour {
 
@@ -45,6 +46,8 @@ public class Gun : MonoBehaviour {
 	public float maxAmmo;
 	public float maxClip;
 	AudioClip alienScream;
+	private bool isReloading = false;
+	public Text ammoText;
 	
 
 //	[HideInInspector]
@@ -55,6 +58,7 @@ public class Gun : MonoBehaviour {
 		ammoVariables = GameObject.FindGameObjectWithTag ("Player").GetComponent<AmmunitionVariables>();
 		shotsRemainingInBurst = burstCount;
 		alienScream = Resources.Load ("alien-scream") as AudioClip;
+		ammoText = GameObject.FindGameObjectWithTag("AmmoText").GetComponent<Text>() as Text;
 		//Restock();
 
 //		currentAmmoInMag = ammoPerMag;
@@ -128,7 +132,7 @@ public class Gun : MonoBehaviour {
 
 		//SetCurrentGunType();
 
-		if (Time.time > nextShotTime && currentClip != 0) {
+		if (Time.time > nextShotTime && currentClip != 0 && isReloading == false) {
 
 			// Burst fire logic
 			if (fireMode == FireMode.Burst) {
@@ -182,23 +186,24 @@ public class Gun : MonoBehaviour {
 			currentClip -= 1;
 			currentAmmo -= 1;
 
-			Debug.Log(gameObject.tag + " " + currentClip);
-			Debug.Log(gameObject.tag + " " + currentAmmo);
+			if (gameObject.tag == "Revolver") {
+				ammoVariables.revolverCurrentClip = currentClip;
+				ammoVariables.revolverCurrentAmmo = currentAmmo;
+				ammoText.text = "Revolver: " + currentClip + "/" + currentAmmo;
 
-				if (gameObject.tag == "Revolver") {
-					ammoVariables.revolverCurrentClip = currentClip;
-					ammoVariables.revolverCurrentAmmo = currentAmmo;
-				}
-				else if (gameObject.tag == "Rifle") {
-					ammoVariables.rifleCurrentClip = currentClip;
-					ammoVariables.rifleCurrentAmmo = currentAmmo;
-				}
-				else if (gameObject.tag == "Shotgun") {
-					ammoVariables.shotgunCurrentClip = currentClip;
-					ammoVariables.shotgunCurrentAmmo = currentAmmo;
-				}
+			}
+			else if (gameObject.tag == "Rifle") {
+				ammoVariables.rifleCurrentClip = currentClip;
+				ammoVariables.rifleCurrentAmmo = currentAmmo;
+				ammoText.text = "Rifle: " + currentClip + "/" + currentAmmo;
 
-
+			}
+			else if (gameObject.tag == "Shotgun") {
+				ammoVariables.shotgunCurrentClip = currentClip;
+				ammoVariables.shotgunCurrentAmmo = currentAmmo;
+				ammoText.text = "Shotgun: " + currentClip + "/" + currentAmmo;
+			}
+			
 			RaycastHit hit;
 			PlayerScript playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
 				//Vector3 direction = GetComponent<Rigidbody>().velocity.normalized;
@@ -275,10 +280,13 @@ public class Gun : MonoBehaviour {
 	{
 		//SetCurrentGunType();
 		Debug.Log("Reload Now");
+		isReloading = true;
 		yield return new WaitForSeconds(3.0F); 
 		currentAmmo += currentClip; // add the remaining bullets in the clip to the total amount of bullets.
 		currentClip = maxClip;      // put new bullets in current clip.
 		currentAmmo -= maxClip;     // subtract the bullets just put in the clip, from the total amount of bullets.
+		isReloading = false;
+
 	}
 
 

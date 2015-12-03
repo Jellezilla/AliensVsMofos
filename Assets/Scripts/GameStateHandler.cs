@@ -9,7 +9,7 @@ public class GameStateHandler : MonoBehaviour {
 	private Texture2D GameLogo;
 	private Material currentMat;
 	private Texture SpaceCashIcon; 
-	private int spaceCash;
+	private int spaceCash = 20000;
 
 	//public List<GameObject>
 	public int GetSpaceCash() {
@@ -106,7 +106,7 @@ public class GameStateHandler : MonoBehaviour {
 		Application.LoadLevel (level);
 	}
 	void OnGUI() {
-		if (Application.loadedLevel == 0) {
+		if (Application.loadedLevel == 1) {
 
 			GUI.DrawTexture (new Rect(Screen.width/2-GameLogo.width/2, Screen.height/2-200, GameLogo.width, GameLogo.height), GameLogo);
 
@@ -126,7 +126,7 @@ public class GameStateHandler : MonoBehaviour {
 	}
 
 	public void StartGame (int level) {
-		StartCoroutine(ChangeLevel(1));
+		StartCoroutine(ChangeLevel(2));
 	}
 	
 	public void QuitGame () {
