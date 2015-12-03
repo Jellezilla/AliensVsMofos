@@ -68,10 +68,7 @@ public class GameStateHandler : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
-		if (Input.GetKeyDown(KeyCode.Z)){
-			print (PlanetMissionCompleted.Count);
-		}
+
 	
 	}
 
@@ -80,12 +77,26 @@ public class GameStateHandler : MonoBehaviour {
 		planets.Clear();
 		planets = GameObject.FindGameObjectsWithTag("Planet").ToList();
 
-		foreach(GameObject planet in planets){
-			if (PlanetMissionCompleted.Count > 0){
+		foreach(GameObject planet in planets)
+			if (planet.GetComponent<MissionHandler>().missionType == MissionType.Intel){
+				// display some stuff here
+			Vector3 intelMarkerPos = new Vector3(planet.transform.position.x, planet.transform.position.y+3f, planet.transform.position.z);
+			GameObject intelMarker = GameObject.Instantiate(Resources.Load("MissionMarkerIntel") as GameObject, intelMarkerPos, planet.transform.rotation) as GameObject;
+			intelMarker.transform.parent = planet.transform;
+			intelMarker.transform.localPosition = new Vector3(0f,1f,0f);
+
+			}
+			else if (planet.GetComponent<MissionHandler>().missionType == MissionType.Elimination){
+			Vector3 eliminationMarkerPos = new Vector3(planet.transform.position.x, planet.transform.position.y+3f, planet.transform.position.z);
+			GameObject eliminationMarker = GameObject.Instantiate(Resources.Load("MissionMarkerAssasination") as GameObject, eliminationMarkerPos, planet.transform.rotation) as GameObject;
+			eliminationMarker.transform.parent = planet.transform;	
+			eliminationMarker.transform.localPosition = new Vector3(0f,1f,0f);
+
+			/*if (PlanetMissionCompleted.Count > 0){
 				if (PlanetMissionCompleted.Contains(planet.name)){
 					planet.GetComponent<MissionHandler>().completed = true;
 				}
-			}
+			}*/
 		}
 	}
 
