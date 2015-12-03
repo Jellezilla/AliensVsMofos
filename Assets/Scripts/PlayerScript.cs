@@ -131,7 +131,6 @@ public class PlayerScript : MonoBehaviour {
 
 		cashText.text = "Cash: "+gsh.GetSpaceCash().ToString();
 
-
 		if (!alive && !respawned){
 			StartCoroutine(Respawn());
 		}
@@ -152,14 +151,14 @@ public class PlayerScript : MonoBehaviour {
 
 		if (guiShow == true) {
 
-			if(Input.GetKeyDown("q") && shopMenuOpen == false) {
+		/*	if(Input.GetKeyDown("q") && shopMenuOpen == false) {
 				shopMenuManager.ShowMenu(shopMenuManager.CurrentMenu);
 				shopMenuOpen = true;
 			}
 			else if (Input.GetKeyDown("q") && shopMenuOpen == true) {
 				shopMenuManager.CloseMenu(shopMenuManager.CurrentMenu);
 				shopMenuOpen = false;
-			}
+			}*/
 		}
 	}
 
@@ -175,7 +174,6 @@ public class PlayerScript : MonoBehaviour {
 			//GetComponent<AudioSource>().Play();
 		}
 		else { //If health is less than 50%
-
 			visualHealth.color =  new Color32(255, (byte)MapValues(currentHealth, 0, maxHealth/2, 0, 255), 0, 255);
 		}
 
@@ -189,7 +187,7 @@ public class PlayerScript : MonoBehaviour {
 
 		if (other.tag == "Air") {
 			// If we're not on cooldown and health is greater than "0", then cooldown.
-			if(currentHealth < maxHealth) {
+			if(currentOxygen < maxOxygen) {
 
 				CurrentOxygen += (1 * Time.fixedDeltaTime) * chargeUpSpeed;
 			}
