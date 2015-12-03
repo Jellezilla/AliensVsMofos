@@ -15,9 +15,12 @@ public class PlayerControl : MonoBehaviour
 	
 	public int currrentSpeed = 30;
 	private GameObject[] turbines;
+
+	public AudioClip spaceshipSound;
 	
 	void Start(){
 		turbines = GameObject.FindGameObjectsWithTag("Turbine");
+		GetComponent<AudioSource>().Play();
 	}
 	
     void LateUpdate()

@@ -19,6 +19,9 @@ public class PlayerScript : MonoBehaviour {
 	public float chargeDownSpeed = 1f;
 	public float chargeUpSpeed = 10f;
 	GameStateHandler gsh;
+	AmmunitionVariables ammoVariables;
+	Gun gun;
+	ShopMenuManager shopMenuManager;
 	public Texture terraformerIcon;
 	private bool terraFormerPurchased = false;
 	GameObject TerraPrefab;
@@ -52,6 +55,8 @@ public class PlayerScript : MonoBehaviour {
 	public List<Mission> activeMissions = new List<Mission>();
 	public List<Mission> completedMissions = new List<Mission>();
 
+	public bool shopMenuOpen = false;
+
 
 	//PlayerController otherPlayerScript;
 
@@ -67,6 +72,9 @@ public class PlayerScript : MonoBehaviour {
 		currentHealth = maxHealth;
 
 		gsh = GameObject.Find("GameStateHandler").GetComponent<GameStateHandler>();
+		ammoVariables = GetComponent<AmmunitionVariables>();
+		gun = GetComponent<Gun>();
+		shopMenuManager = GameObject.Find("Canvas 2").GetComponent<ShopMenuManager>();
 		//spaceCash = gsh.GetSpaceCash ();
 	}
 
@@ -108,6 +116,18 @@ public class PlayerScript : MonoBehaviour {
 
 		if (Input.GetMouseButtonUp(0)) {
 			GetComponent<GunController>().OnTriggerRelease();
+		}
+
+		if (guiShow == true) {
+
+			if(Input.GetKeyDown("q") && shopMenuOpen == false) {
+				shopMenuManager.ShowMenu(shopMenuManager.CurrentMenu);
+				shopMenuOpen = true;
+			}
+			else if (Input.GetKeyDown("q") && shopMenuOpen == true) {
+				shopMenuManager.CloseMenu(shopMenuManager.CurrentMenu);
+				shopMenuOpen = false;
+			}
 		}
 	}
 
@@ -162,39 +182,83 @@ public class PlayerScript : MonoBehaviour {
 
 	void OnGUI() {
 		if(guiShow == true) {
-			GUI.Box(new Rect(10, 60, 220, 350), "Buy items");
-			GUI.Label(new Rect(65, 383, 220, 35), "$pace Ca$h: " + gsh.GetSpaceCash());
+
+//			if(Input.GetKeyDown("q") && shopMenuOpen == false) {
+//				shopMenuManager.ShowMenu(shopMenuManager.CurrentMenu);
+//				shopMenuOpen = true;
+//			}
+//			else if (Input.GetKeyDown("q") && shopMenuOpen == true) {
+//				shopMenuManager.CloseMenu(shopMenuManager.CurrentMenu);
+//				shopMenuOpen = false;
+//			}
+
+	
+			GUI.Box(new Rect(10, 60, 220, 600), "Buy items");
+			GUI.Label(new Rect(65, 630, 220, 35), "$pace Ca$h: " + gsh.GetSpaceCash());
 			//GUI.Button shotgunButton = GUI.Button(new Rect(10, 310, 200, 30), "Buy shotgun");
 			if(GUI.Button(new Rect(20, 100, 200, 30), "Buy lighter space suit $110,00")) {
-				Debug.Log("You clicked 'Buy lighter space suit'");
-				gsh.SetSpaceCash(-110);
-				gameObject.GetComponent<Movement>().maxSpeed = 3;
+				if(gsh.GetSpaceCash() >= 110) {
+					Debug.Log("You clicked 'Buy lighter space suit'");
+					gsh.SetSpaceCash(-110);
+					gameObject.GetComponent<Movement>().maxSpeed = 3;
+				}
 			}
 
 			if(GUI.Button(new Rect(20, 160, 200, 30), "Buy bigger oxygen tank $80,00")) {
-				Debug.Log("You clicked 'Buy bigger oxygen tank'");
-				gsh.SetSpaceCash(-80);
-				chargeDownSpeed = .6f;
+				if(gsh.GetSpaceCash() >= 80) {
+					Debug.Log("You clicked 'Buy bigger oxygen tank'");
+					gsh.SetSpaceCash(-80);
+					chargeDownSpeed = .6f;
+				}
 			}
 
 			if(GUI.Button(new Rect(20, 220, 200, 30), "Buy revolver $1.000,00")) {
-				gsh.SetSpaceCash(-1000); //-= 1000;
-				gameObject.GetComponent<GunController>().BuyRevolver();
+				if(gsh.GetSpaceCash() >= 1000) {
+					gsh.SetSpaceCash(-1000); //-= 1000;
+					gameObject.GetComponent<GunController>().BuyRevolver();
+				}
 			}
 
 			if(GUI.Button(new Rect(20, 280, 200, 30), "Buy assault rifle $1.500,00")) {
-				gsh.SetSpaceCash(-1500);
-				gameObject.GetComponent<GunController>().BuyRifle();
+				if(gsh.GetSpaceCash() >= 1500) {
+					gsh.SetSpaceCash(-1500);
+					gameObject.GetComponent<GunController>().BuyRifle();
+				}
 			}
-
 
 			if (GUI.Button(new Rect(20, 340, 200, 30), "Buy shotgun $1.700,00")) {
-				gsh.SetSpaceCash(-1700);
-				gameObject.GetComponent<GunController>().BuyShotgun();
+				if(gsh.GetSpaceCash() >= 1700) {
+					gsh.SetSpaceCash(-1700);
+					gameObject.GetComponent<GunController>().BuyShotgun();
+				}
 			}
+
 			if(GUI.Button (new Rect (20, 400, 200, 30), "Buy Terraformer $2.500,00")) {
-				gsh.SetSpaceCash(-2500);
-				terraFormerPurchased = true;
+				if(gsh.GetSpaceCash() >= 2500) {
+					gsh.SetSpaceCash(-2500);
+					terraFormerPurchased = true;
+				}
+			}
+
+			if(GUI.Button (new Rect (20, 460, 200, 30), "Buy 100 revolver rounds $20,00")) {
+				if(gsh.GetSpaceCash() >= 20) {
+					gsh.SetSpaceCash(-20);
+					ammoVariables.revolverCurrentAmmo += 100;
+				}
+			}
+
+			if(GUI.Button (new Rect (20, 520, 200, 30), "Buy 100 rifle rounds $30,00")) {
+				if(gsh.GetSpaceCash() >= 30) {
+					gsh.SetSpaceCash(-30);
+					ammoVariables.rifleCurrentAmmo += 100;
+				}
+			}
+
+			if(GUI.Button (new Rect (20, 580, 200, 30), "Buy 100 shotgun rounds $40,00")) {
+				if(gsh.GetSpaceCash() >= 40) {
+					gsh.SetSpaceCash(-40);
+					ammoVariables.shotgunCurrentAmmo += 100;
+				}
 			}
 		}
 		if (terraFormerPurchased) {

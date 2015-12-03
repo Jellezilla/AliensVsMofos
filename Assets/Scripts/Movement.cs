@@ -20,6 +20,10 @@ public class Movement : MonoBehaviour {
 	
 	private CharacterController controller;
 
+	public AudioClip footstepSound;
+	//public AudioClip[] footstepSounds;
+
+
 
 	// Use this for initialization
 	void Start () {
@@ -28,8 +32,13 @@ public class Movement : MonoBehaviour {
 		gunController = GetComponent<GunController>();
 		controller = GetComponent<CharacterController>();
 
-
 		anim = transform.GetComponent<Animator>();
+
+		//Loading the items into the array
+//		footstepSounds =  new AudioClip[]{(AudioClip)Resources.Load("Audio/footsteps-gravel"),
+//			(AudioClip)Resources.Load("footsteps-gravel2"), 
+//			(AudioClip)Resources.Load("footsteps-gravel3"), 
+//			(AudioClip)Resources.Load("footsteps-gravel4")};
 	}
 	
 	// Update is called once per frame
@@ -116,5 +125,13 @@ public class Movement : MonoBehaviour {
 		}
 
 	
+	}
+
+	public void PlayFootstepSound() {
+		GetComponent<AudioSource>().PlayOneShot(footstepSound, 0.5f);
+
+			//if (GetComponent<AudioSource>().isPlaying) return;
+//			GetComponent<AudioSource>().clip = footstepSounds[Random.Range(0,footstepSounds.Length)];
+//			GetComponent<AudioSource>().Play();
 	}
 }

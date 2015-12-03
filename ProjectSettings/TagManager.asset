@@ -23,6 +23,9 @@ TagManager:
   - Revolver
   - Rifle
   - Shotgun
+  - AmmoText
+  - Canvas
+  - Canvas2
   layers:
   - Default
   - TransparentFX
