@@ -350,8 +350,8 @@ public class TileHandler : MonoBehaviour {
 	// create path to nearest non liquid
 	private void MakePathWayFromSpaceShip(int x) {
 		int y = 32;
-		Debug.Log ("tmpMap: "+tmpMap [x, y].ToString ());
-		Debug.Log ("x: " + x);
+		//Debug.Log ("tmpMap: "+tmpMap [x, y].ToString ());
+		//Debug.Log ("x: " + x);
 		try {
 			if (tmpMap [x, y] != 1 && tmpMap [x, y] != 2 && tmpMap [x, y] != 3) { // tile is not walkable - make it so and go again
 				map[x,y] = 1;
