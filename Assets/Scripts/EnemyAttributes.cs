@@ -16,6 +16,10 @@ public class EnemyAttributes : MonoBehaviour {
 	public int damage = 20;
 	float criticalChange = 20;
 	float criticalMultiplier = 1.5f;
+	AudioClip shoot;
+	AudioClip pain;
+	AudioSource audioSource;
+	bool waitForNextShot = false;
 
 	Animator anim;
 	// Use this for initialization
@@ -23,30 +27,44 @@ public class EnemyAttributes : MonoBehaviour {
 		alive = true;
 		currentHealth = maxHealth;
 		anim = GetComponent<Animator>();
+		audioSource = GetComponent<AudioSource>();
+		shoot = Resources.Load ("EnemyShoot") as AudioClip;
+		pain = Resources.Load ("pain") as AudioClip;
+
+	//	audio.PlayOneShot ((AudioClip)Resources.Load ("gunshot1"));
+		
+
 	}
 
 
 	public IEnumerator ShootAtTarget(Vector3 target, int numberOfShots){
+		if (waitForNextShot){
+			yield break;
+		}
 		for (int i = 0; i < numberOfShots; i++){
 
 			anim.SetTrigger("Shoot");
 //			print ("enemy shooting");
-
+			waitForNextShot = true;
 			int hitAccuracy = Random.Range (1,100);
 			bool hit = (hitAccuracy < accuracy ? true : false);         
-
+			audioSource.PlayOneShot(shoot);
 			if (hit){
 //				print ("enemy hitting");
 				float finalDamage = damage;
 				int rand = Random.Range (1,100);
 				if (rand <= criticalChange){
 					finalDamage *= criticalMultiplier;
-					GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>().ApplyDamage((int)finalDamage);
+					GameObject player = GameObject.FindGameObjectWithTag("Player");
+					player.GetComponent<PlayerScript>().ApplyDamage((int)finalDamage);
+					player.transform.GetChild(0).GetComponent<AudioSource>().PlayOneShot(pain);
+
 				}
 			}
 		
-			float delay = Random.Range (0.3f, 0.8f);
+			float delay = Random.Range (3f, 5f);
 			yield return new WaitForSeconds(delay);
+			waitForNextShot = false;
 		}
 
 	}
