@@ -128,7 +128,7 @@ public class PlayerScript : MonoBehaviour {
 			StartCoroutine(Respawn());
 		}
 
-		if(!onAirArea && currentHealth > 0) {
+		if(!onAirArea && currentHealth > 0 && !terraFormerPurchased) {
 			CurrentOxygen -= (1f * Time.fixedDeltaTime) * chargeDownSpeed;
 		}
 
