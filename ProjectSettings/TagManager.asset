@@ -26,6 +26,8 @@ TagManager:
   - AmmoText
   - Canvas
   - Canvas2
+  - SpaceCash
+  - MissionInfo
   layers:
   - Default
   - TransparentFX

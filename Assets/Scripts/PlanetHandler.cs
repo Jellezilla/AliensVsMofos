@@ -55,13 +55,13 @@ public class PlanetHandler : MonoBehaviour {
 	
 	}
 	void OnGUI() {
-		if(GUI.Button(new Rect(Screen.width-215, 15, 200, 35), "Leave Planet")) {
+	/*	if(GUI.Button(new Rect(Screen.width-215, 15, 200, 35), "Leave Planet")) {
 			confirmation = true;
 		}
 		if(confirmation) {
 			
 			Rect WindowRect = GUI.Window(0,windowRect, ConfirmWindow, "Confirm leaving Planet");
-		}
+		}*/
 	}
 	void ConfirmWindow(int windowID) {
 		GUI.TextArea (new Rect (15, 20, 370, 100), "You are about to leave this Planet. Once you do, you will never be able to return to this place again.\nAny structures built will be abandoned. \n\nAre you sure you want to leave this Planet?");

@@ -12,6 +12,7 @@ public class PlayerScript : MonoBehaviour {
 	public RectTransform oxygenTransform;
 
 	public Canvas canvas;
+	Rect windowRect;
 	// Storing the Y position.
 	private float cachedHealthY;
 	private float minHealthXValue;
@@ -33,7 +34,8 @@ public class PlayerScript : MonoBehaviour {
 	public Texture terraformerIcon;
 	private bool terraFormerPurchased = false;
 	GameObject TerraPrefab;
-	
+	Text cashText;
+	bool confirmation;
 	// Everytime we access the CurrentHealth property, which changes the health, then the "HandleHealth" method is called, which adjusts the position and color of the health bar
 	private float CurrentHealth {
 		get {return currentHealth;}
@@ -79,6 +81,8 @@ public class PlayerScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		alive = true;
+		windowRect = new Rect(Screen.width/2-200, Screen.height/2-100, 400,200);
+
 		// Storing the Y position of the health bar.
 		cachedHealthY = healthTransform.position.y;
 		cachedOxygenY = oxygenTransform.position.y;
@@ -93,10 +97,11 @@ public class PlayerScript : MonoBehaviour {
 		currentHealth = maxHealth;
 		currentOxygen = maxOxygen;
 
+		cashText = GameObject.FindGameObjectWithTag("SpaceCash").GetComponent<Text>() as Text;
 		gsh = GameObject.Find("GameStateHandler").GetComponent<GameStateHandler>();
 		ammoVariables = GetComponent<AmmunitionVariables>();
 		gun = GetComponent<Gun>();
-		//shopMenuManager = GameObject.FindGameObjectWithTag("Canvas2").GetComponent<ShopMenuManager>();
+		shopMenuManager = GameObject.FindGameObjectWithTag("Canvas2").GetComponent<ShopMenuManager>();
 		//spaceCash = gsh.GetSpaceCash ();
 	}
 
@@ -124,6 +129,9 @@ public class PlayerScript : MonoBehaviour {
 		if (currentOxygen <= 0)
 			alive = false;
 
+		cashText.text = "Cash: "+gsh.GetSpaceCash().ToString();
+
+
 		if (!alive && !respawned){
 			StartCoroutine(Respawn());
 		}
@@ -144,14 +152,14 @@ public class PlayerScript : MonoBehaviour {
 
 		if (guiShow == true) {
 
-		/*	if(Input.GetKeyDown("q") && shopMenuOpen == false) {
+			if(Input.GetKeyDown("q") && shopMenuOpen == false) {
 				shopMenuManager.ShowMenu(shopMenuManager.CurrentMenu);
 				shopMenuOpen = true;
 			}
 			else if (Input.GetKeyDown("q") && shopMenuOpen == true) {
 				shopMenuManager.CloseMenu(shopMenuManager.CurrentMenu);
 				shopMenuOpen = false;
-			}*/
+			}
 		}
 	}
 
@@ -188,6 +196,11 @@ public class PlayerScript : MonoBehaviour {
 		}
 
 		if(other.tag == "Shop") {
+
+			if (!shopMenuOpen){
+				shopMenuManager.ShowMenu(shopMenuManager.CurrentMenu);
+				shopMenuOpen = true;
+			}
 			guiShow = true;
 		}
 	}
@@ -195,6 +208,10 @@ public class PlayerScript : MonoBehaviour {
 	void OnTriggerExit(Collider other) {
 		if(other.tag == "Shop") {
 			guiShow = false;
+			if (shopMenuOpen){
+				shopMenuManager.CloseMenu(shopMenuManager.CurrentMenu);
+				shopMenuOpen = false;
+			}
 		}
 		if(other.tag == "Air") {
 			onAirArea = false;
@@ -222,6 +239,75 @@ public class PlayerScript : MonoBehaviour {
 		}
 	}
 
+	public void BuySpaceSuit() {
+		if(gsh.GetSpaceCash() >= 110) {
+			Debug.Log("You clicked 'Buy lighter space suit'");
+			gsh.SetSpaceCash(-110);
+			gameObject.GetComponent<Movement>().maxSpeed = 3;
+		}
+	}
+	
+	public void BuyOxygen() {
+		if(gsh.GetSpaceCash() >= 80) {
+			Debug.Log("You clicked 'Buy bigger oxygen tank'");
+			gsh.SetSpaceCash(-80);
+			chargeDownSpeed = .6f;
+		}
+	}
+	
+	public void BuyRevolver() {
+		if(gsh.GetSpaceCash() >= 1000) {
+			gsh.SetSpaceCash(-1000); //-= 1000;
+			gameObject.GetComponent<GunController>().BuyRevolver();
+		}
+	}
+	
+	public void BuyRifle() {
+		if(gsh.GetSpaceCash() >= 1500) {
+			gsh.SetSpaceCash(-1500);
+			gameObject.GetComponent<GunController>().BuyRifle();
+		}
+	}
+	
+	public void BuyShotgun() {
+		if(gsh.GetSpaceCash() >= 1700) {
+			gsh.SetSpaceCash(-1700);
+			gameObject.GetComponent<GunController>().BuyShotgun();
+		}
+	}
+	
+	public void BuyTerraformer() {
+		if(gsh.GetSpaceCash() >= 2500) {
+			gsh.SetSpaceCash(-2500);
+			terraFormerPurchased = true;
+		}
+	}
+	
+	public void BuyRevolverAmmo() {
+		if(gsh.GetSpaceCash() >= 20) {
+			gsh.SetSpaceCash(-20);
+			ammoVariables.revolverCurrentAmmo += 100;
+		}
+	}
+	
+	public void BuyRifleAmmo() {
+		if(gsh.GetSpaceCash() >= 30) {
+			gsh.SetSpaceCash(-30);
+			ammoVariables.rifleCurrentAmmo += 100;
+		}
+	}
+	
+	public void BuyShotgunAmmo() {
+		if(gsh.GetSpaceCash() >= 40) {
+			gsh.SetSpaceCash(-40);
+			ammoVariables.shotgunCurrentAmmo += 100;
+		}
+	}
+	
+	public void ExitShopMenu() {
+		shopMenuManager.CloseMenu(shopMenuManager.CurrentMenu);
+		shopMenuOpen = false;
+	}
 
 
 	void OnGUI() {
@@ -236,7 +322,7 @@ public class PlayerScript : MonoBehaviour {
 //				shopMenuOpen = false;
 //			}
 
-	
+	/*
 			GUI.Box(new Rect(10, 60, 220, 600), "Buy items");
 			GUI.Label(new Rect(65, 630, 220, 35), "$pace Ca$h: " + gsh.GetSpaceCash());
 			//GUI.Button shotgunButton = GUI.Button(new Rect(10, 310, 200, 30), "Buy shotgun");
@@ -303,8 +389,10 @@ public class PlayerScript : MonoBehaviour {
 					gsh.SetSpaceCash(-40);
 					ammoVariables.shotgunCurrentAmmo += 100;
 				}
-			}
+			}*/
 		}
+
+
 		if (terraFormerPurchased) {
 			GUI.DrawTexture (new Rect(Screen.width-50,Screen.height/2, 50, 50), terraformerIcon);
 			if(GUI.Button (new Rect(Screen.width-50, Screen.height/2, 50, 50), "")) {
@@ -321,6 +409,31 @@ public class PlayerScript : MonoBehaviour {
 
 			}
 		}
+
+		if (guiShow){
+			if(GUI.Button(new Rect(Screen.width-215, 15, 200, 35), "Leave Planet")) {
+				confirmation = true;
+			}
+			if(confirmation) {
+				
+				Rect WindowRect = GUI.Window(0,windowRect, ConfirmWindow, "Confirm leaving Planet");
+			}
+		}
+	}
+	
+	void ConfirmWindow(int windowID) {
+		GUI.TextArea (new Rect (15, 20, 370, 100), "You are about to leave this Planet. Once you do, you will never be able to return to this place again.\nAny structures built will be abandoned. \n\nAre you sure you want to leave this Planet?");
+		if(GUI.Button (new Rect(100, 150, 85, 20), "Yes")) {
+			StartCoroutine(ChangeLevel(Application.loadedLevel-1));
+		}
+		if(GUI.Button (new Rect(215, 150, 85, 20), "No")) {
+			confirmation = false;
+		}
+	}
+	IEnumerator ChangeLevel(int level) {
+		float fadeTime = GameObject.Find ("SceneFader").GetComponent<Fading>().BegindFade(1);
+		yield return new WaitForSeconds (fadeTime);
+		Application.LoadLevel (level);
 	}
 
 	private float MapValues(float x, float inMin, float inMax, float outMin, float outMax) {

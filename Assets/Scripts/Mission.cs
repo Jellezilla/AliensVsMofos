@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 
 
@@ -18,8 +19,8 @@ public class Mission : MonoBehaviour {
 	private Transform target;
 	private GameStateHandler gsh;
 	private TileHandler th;
-
-
+	string missionText = " ";
+	Text missionTextString; 
 
 	//protected Player
 
@@ -33,8 +34,10 @@ public class Mission : MonoBehaviour {
 		playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
 		playerScript.activeMissions.Add(this);
 		playerScript.currentMission = this;
-	}
+		missionTextString = GameObject.FindGameObjectWithTag("MissionInfo").GetComponent<Text>() as Text;
 
+	}
+	
 	public void Start(){
 		th = GameObject.FindGameObjectWithTag("TileHandler").GetComponent<TileHandler>();
 		switch(missionType){
@@ -50,7 +53,6 @@ public class Mission : MonoBehaviour {
 			GameObject intel = GameObject.Instantiate(Resources.Load("Intel") as GameObject, someTile.transform.position, someTile.transform.rotation) as GameObject;
 			target = intel.transform;
 			break;
-		 
 		}
 
 
@@ -61,6 +63,21 @@ public class Mission : MonoBehaviour {
 
 		if (missionType == MissionType.Elimination || missionType == MissionType.Intel)
 			CheckCompletion();
+
+		if (!completed)
+		switch (missionType){
+		case MissionType.Intel: 
+			missionText =  "Find and retrieve the round intel package.";
+			break;
+		case MissionType.Elimination:
+			missionText = "Find and eliminate the oversized alien.";
+			break;
+		}
+		else {
+			missionText = "Mission complete. Return to your ship.";
+		}
+
+		missionTextString.text = missionText;
 	}
 
 	void CheckCompletion(){
@@ -127,7 +144,6 @@ public class Mission : MonoBehaviour {
 		else{
 			GUI.Label(new Rect(Screen.width/3, 10, 300, 20), "Mission complete. Return to your ship.");
 		}
-
 	}
 
 
