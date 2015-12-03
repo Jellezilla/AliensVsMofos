@@ -65,7 +65,7 @@ public class EnemyAttributes : MonoBehaviour {
 				}
 			}
 		
-			float delay = Random.Range (3f, 5f);
+			float delay = Random.Range (2f, 3f);
 			yield return new WaitForSeconds(delay);
 			waitForNextShot = false;
 		}

@@ -1913,10 +1913,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 144672f0f9f7c4edc822c15b95fa43f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 300
-  speed: 3
+  maxHealth: 500
+  speed: 4
   destinationReached: 0
-  accuracy: 70
+  accuracy: 80
   damage: 30
 --- !u!114 &11446566
 MonoBehaviour:
@@ -2070,11 +2070,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: accuracy
-      value: 70
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: maxHealth
-      value: 300
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: speed
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

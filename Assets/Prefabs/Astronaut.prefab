@@ -1485,13 +1485,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0
   healthTransform: {fileID: 0}
+  oxygenTransform: {fileID: 0}
   canvas: {fileID: 0}
   onAirArea: 0
   chargeDownSpeed: 1
   chargeUpSpeed: 10
   terraformerIcon: {fileID: 2800000, guid: a8bf60af6d88616478d899ddae1a9788, type: 3}
   maxHealth: 100
-  healthText: {fileID: 0}
+  maxOxygen: 100
+  visualOxygen: {fileID: 0}
   visualHealth: {fileID: 0}
   damage: 40
   criticalChange: 20
