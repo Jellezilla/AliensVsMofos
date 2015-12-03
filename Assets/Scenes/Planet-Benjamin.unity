@@ -759,29 +759,13 @@ Prefab:
       propertyPath: visualHealth
       value: 
       objectReference: {fileID: 246167990}
-    - target: {fileID: 11470066, guid: 22fcd07f70fa04bb79a0f5cb3d6d2e23, type: 2}
-      propertyPath: revolverMaxAmmo
-      value: 500
-      objectReference: {fileID: 0}
-    - target: {fileID: 11470066, guid: 22fcd07f70fa04bb79a0f5cb3d6d2e23, type: 2}
-      propertyPath: rifleMaxAmmo
-      value: 500
-      objectReference: {fileID: 0}
-    - target: {fileID: 11470066, guid: 22fcd07f70fa04bb79a0f5cb3d6d2e23, type: 2}
-      propertyPath: shotgunMaxAmmo
-      value: 500
-      objectReference: {fileID: 0}
-    - target: {fileID: 11470066, guid: 22fcd07f70fa04bb79a0f5cb3d6d2e23, type: 2}
-      propertyPath: shotgunCurrentAmmo
-      value: 400
-      objectReference: {fileID: 0}
-    - target: {fileID: 11470066, guid: 22fcd07f70fa04bb79a0f5cb3d6d2e23, type: 2}
-      propertyPath: revolverCurrentAmmo
-      value: 400
-      objectReference: {fileID: 0}
-    - target: {fileID: 11470066, guid: 22fcd07f70fa04bb79a0f5cb3d6d2e23, type: 2}
-      propertyPath: rifleCurrentAmmo
-      value: 400
+    - target: {fileID: 11432176, guid: 22fcd07f70fa04bb79a0f5cb3d6d2e23, type: 2}
+      propertyPath: footstepSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 6054fcb935081450d84f0955edaacad8, type: 3}
+    - target: {fileID: 8260058, guid: 22fcd07f70fa04bb79a0f5cb3d6d2e23, type: 2}
+      propertyPath: m_audioClip
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 22fcd07f70fa04bb79a0f5cb3d6d2e23, type: 2}

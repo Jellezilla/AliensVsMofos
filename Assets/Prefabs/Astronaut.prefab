@@ -1529,17 +1529,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed734f0fe74264fbd8569bae4fad79f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  revolverCurrentAmmo: 100
+  revolverCurrentAmmo: 400
   revolverCurrentClip: 20
-  revolverMaxAmmo: 200
+  revolverMaxAmmo: 500
   revolverMaxClip: 20
-  rifleCurrentAmmo: 100
+  rifleCurrentAmmo: 400
   rifleCurrentClip: 20
-  rifleMaxAmmo: 200
+  rifleMaxAmmo: 500
   rifleMaxClip: 20
-  shotgunCurrentAmmo: 100
+  shotgunCurrentAmmo: 400
   shotgunCurrentClip: 20
-  shotgunMaxAmmo: 200
+  shotgunMaxAmmo: 500
   shotgunMaxClip: 20
 --- !u!114 &11471420
 MonoBehaviour:
