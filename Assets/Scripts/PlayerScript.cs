@@ -9,12 +9,20 @@ public class PlayerScript : MonoBehaviour {
 	public float speed;
 	// The health bar.
 	public RectTransform healthTransform;
+	public RectTransform oxygenTransform;
+
 	public Canvas canvas;
 	// Storing the Y position.
-	private float cachedY;
-	private float minXValue;
-	private float maxXValue;
+	private float cachedHealthY;
+	private float minHealthXValue;
+	private float maxHealthXValue;
+
+	private float cachedOxygenY;
+	private float minOxygenXValue;
+	private float maxOxygenXValue;
+
 	private float currentHealth;
+	private float currentOxygen;
 	public bool onAirArea = false;
 	public float chargeDownSpeed = 1f;
 	public float chargeUpSpeed = 10f;
@@ -34,8 +42,16 @@ public class PlayerScript : MonoBehaviour {
 		}
 	}
 
-	public float maxHealth;
-	public Text healthText;
+	private float CurrentOxygen {
+		get {return currentOxygen;}
+		set {currentOxygen = value;
+			HandleOxygen();
+		}
+	}
+	public float maxHealth = 100;
+	public float maxOxygen = 100;
+
+	public Image visualOxygen;
 	public Image visualHealth;
 
 	private bool guiShow;
@@ -64,17 +80,23 @@ public class PlayerScript : MonoBehaviour {
 	void Start () {
 		alive = true;
 		// Storing the Y position of the health bar.
-		cachedY = healthTransform.position.y;
+		cachedHealthY = healthTransform.position.y;
+		cachedOxygenY = oxygenTransform.position.y;
 		// Storing the X value of the bar at max health, which is the starting position of the bar.
-		maxXValue = healthTransform.position.x;
+		maxHealthXValue = healthTransform.position.x;
+		maxOxygenXValue = oxygenTransform.position.x;
+
 		// The x position of the bar at minimum health is the starting position of the bar minus the width of the rectangle (the health bar).
-		minXValue = healthTransform.position.x - healthTransform.rect.width;
+		minHealthXValue = healthTransform.position.x - healthTransform.rect.width;
+		minOxygenXValue = oxygenTransform.position.x - oxygenTransform.rect.width;
+
 		currentHealth = maxHealth;
+		currentOxygen = maxOxygen;
 
 		gsh = GameObject.Find("GameStateHandler").GetComponent<GameStateHandler>();
 		ammoVariables = GetComponent<AmmunitionVariables>();
 		gun = GetComponent<Gun>();
-		shopMenuManager = GameObject.Find("Canvas 2").GetComponent<ShopMenuManager>();
+		//shopMenuManager = GameObject.FindGameObjectWithTag("Canvas2").GetComponent<ShopMenuManager>();
 		//spaceCash = gsh.GetSpaceCash ();
 	}
 
@@ -99,13 +121,15 @@ public class PlayerScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		//HandleMovement();
+		if (currentOxygen <= 0)
+			alive = false;
 
 		if (!alive && !respawned){
 			StartCoroutine(Respawn());
 		}
 
 		if(!onAirArea && currentHealth > 0) {
-			CurrentHealth -= (1f * Time.fixedDeltaTime) * chargeDownSpeed;
+			CurrentOxygen -= (1f * Time.fixedDeltaTime) * chargeDownSpeed;
 		}
 
 		// Weapon Input
@@ -120,24 +144,22 @@ public class PlayerScript : MonoBehaviour {
 
 		if (guiShow == true) {
 
-			if(Input.GetKeyDown("q") && shopMenuOpen == false) {
+		/*	if(Input.GetKeyDown("q") && shopMenuOpen == false) {
 				shopMenuManager.ShowMenu(shopMenuManager.CurrentMenu);
 				shopMenuOpen = true;
 			}
 			else if (Input.GetKeyDown("q") && shopMenuOpen == true) {
 				shopMenuManager.CloseMenu(shopMenuManager.CurrentMenu);
 				shopMenuOpen = false;
-			}
+			}*/
 		}
 	}
 
 	private void HandleHealth() {
-		// Takes care of the health updating the health text.
-		healthText.text = "Oxygen level: " + currentHealth;
 		// Contains the X position of the health bar.
-		float currentXValue = MapValues (currentHealth, 0, maxHealth, minXValue, maxXValue);
+		float currentXValue = MapValues (currentHealth, 0, maxHealth, minHealthXValue, maxHealthXValue);
 
-		healthTransform.position = new Vector3 (currentXValue, cachedY);
+		healthTransform.position = new Vector3 (currentXValue, cachedHealthY);
 
 		if (currentHealth > maxHealth / 2) { // If health is more than 50%
 			visualHealth.color = new Color32((byte)MapValues(currentHealth, maxHealth / 2, maxHealth, 255, 0), 255, 0, 255);
@@ -161,7 +183,7 @@ public class PlayerScript : MonoBehaviour {
 			// If we're not on cooldown and health is greater than "0", then cooldown.
 			if(currentHealth < maxHealth) {
 
-				CurrentHealth += (1 * Time.fixedDeltaTime) * chargeUpSpeed;
+				CurrentOxygen += (1 * Time.fixedDeltaTime) * chargeUpSpeed;
 			}
 		}
 
@@ -178,6 +200,28 @@ public class PlayerScript : MonoBehaviour {
 			onAirArea = false;
 		}
 	}
+
+	private void HandleOxygen() {
+		// Contains the X position of the health bar.
+		float currentXValue = MapValues (currentOxygen, 0, maxOxygen, minOxygenXValue, maxOxygenXValue);
+		
+		oxygenTransform.position = new Vector3 (currentXValue, cachedOxygenY);
+		
+		if (currentOxygen > maxOxygen / 2) { // If health is more than 50%
+			visualOxygen.color = new Color32((byte)MapValues(currentOxygen, maxOxygen / 2, maxOxygen, 255, 0), 255, 0, 255);
+			//GetComponent<AudioSource>().loop = true;
+			//GetComponent<AudioSource>().Play();
+		}
+		else { //If health is less than 50%
+			
+			visualOxygen.color =  new Color32(255, (byte)MapValues(currentOxygen, 0, maxOxygen/2, 0, 255), 0, 255);
+		}
+		
+		if (currentOxygen == maxOxygen) {
+			GetComponent<AudioSource>().Stop();
+		}
+	}
+
 
 
 	void OnGUI() {

@@ -1916,7 +1916,8 @@ MonoBehaviour:
   maxHealth: 100
   speed: 3
   destinationReached: 0
-  damage: 20
+  accuracy: 60
+  damage: 25
 --- !u!114 &11446566
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2065,7 +2066,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: damage
-      value: 20
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: accuracy
+      value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

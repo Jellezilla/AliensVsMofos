@@ -106,7 +106,7 @@ public class GameStateHandler : MonoBehaviour {
 		Application.LoadLevel (level);
 	}
 	void OnGUI() {
-		if (Application.loadedLevel == 1) {
+		if (Application.loadedLevel == 0) {
 
 			GUI.DrawTexture (new Rect(Screen.width/2-GameLogo.width/2, Screen.height/2-200, GameLogo.width, GameLogo.height), GameLogo);
 
@@ -118,15 +118,15 @@ public class GameStateHandler : MonoBehaviour {
 
 		}
 
-		if (Application.loadedLevel == 1 || Application.loadedLevel == 2) {
+		/*if (Application.loadedLevel == 1 || Application.loadedLevel == 2) {
 			GUI.Label (new Rect(280, 5, 100, 25), spaceCash.ToString ());
 			GUI.DrawTexture (new Rect(250, 5, 25, 25), SpaceCashIcon);
-		}
+		}*/
 
 	}
 
 	public void StartGame (int level) {
-		StartCoroutine(ChangeLevel(2));
+		StartCoroutine(ChangeLevel(1));
 	}
 	
 	public void QuitGame () {

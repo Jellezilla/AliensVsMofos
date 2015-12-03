@@ -840,7 +840,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 175664}
   m_LocalRotation: {x: 0, y: .382683456, z: 0, w: .923879504}
-  m_LocalPosition: {x: 2652.77808, y: 84.5387192, z: -212.070877}
+  m_LocalPosition: {x: 32, y: 2, z: 35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 431088}
@@ -1191,7 +1191,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 140876}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.708000004, y: 1.25600004, z: .0979999974}
+  m_LocalPosition: {x: .00899999961, y: 1.25600004, z: .947000027}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 421914}
@@ -1489,7 +1489,7 @@ MonoBehaviour:
   onAirArea: 0
   chargeDownSpeed: 1
   chargeUpSpeed: 10
-  terraformerIcon: {fileID: 0}
+  terraformerIcon: {fileID: 2800000, guid: a8bf60af6d88616478d899ddae1a9788, type: 3}
   maxHealth: 100
   healthText: {fileID: 0}
   visualHealth: {fileID: 0}
@@ -1499,6 +1499,7 @@ MonoBehaviour:
   currentMission: {fileID: 0}
   activeMissions: []
   completedMissions: []
+  shopMenuOpen: 0
 --- !u!114 &11432176
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1514,6 +1515,7 @@ MonoBehaviour:
   rotationSpeed: 450
   walkSpeed: 2
   runSpeed: 8
+  footstepSound: {fileID: 0}
 --- !u!114 &11470066
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1525,18 +1527,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed734f0fe74264fbd8569bae4fad79f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  revolverCurrentAmmo: 6
-  revolverCurrentClip: 12
-  revolverMaxAmmo: 6
-  revolverMaxClip: 24
-  rifleCurrentAmmo: 30
-  rifleCurrentClip: 90
-  rifleMaxAmmo: 30
-  rifleMaxClip: 120
-  shotgunCurrentAmmo: 2
-  shotgunCurrentClip: 8
-  shotgunMaxAmmo: 2
-  shotgunMaxClip: 32
+  revolverCurrentAmmo: 100
+  revolverCurrentClip: 20
+  revolverMaxAmmo: 200
+  revolverMaxClip: 20
+  rifleCurrentAmmo: 100
+  rifleCurrentClip: 20
+  rifleMaxAmmo: 200
+  rifleMaxClip: 20
+  shotgunCurrentAmmo: 100
+  shotgunCurrentClip: 20
+  shotgunMaxAmmo: 200
+  shotgunMaxClip: 20
 --- !u!114 &11471420
 MonoBehaviour:
   m_ObjectHideFlags: 1
